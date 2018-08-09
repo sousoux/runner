@@ -59,8 +59,11 @@ class Runner(Platform):
         else: return -1
 
     def prepare(self):
+        binary = self.config.getOption('binary').split(':')[0]
+        if execCmd("objcopy --srec-len 1 --output-target=srec %s %s.s19" % (binary, os.path.basename(binary))) != 0: return -1
+        if execCmd("s19toheader.py %s.s19 " % (os.path.basename(binary))) != 0: return -1
         if self.config.getOption('pulpArchi') == 'mia' or self.config.getOption('pulpArchi') == 'fulmine': return 0
-
+        
         binary = self.config.getOption('binary').split(':')[0]
         if binary != None:
             return binaryTools.genSectionBinaries(binary, os.path.dirname(binary), self.config.getOption('pulpCoreArchi'))
