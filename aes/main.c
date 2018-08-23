@@ -2,6 +2,7 @@
 #include <string.h>
 #include "AesLib.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static void DumpMessage(char *Mess, unsigned char *Text, int Len, int Asc)
 
